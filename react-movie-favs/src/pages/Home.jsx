@@ -40,6 +40,7 @@ function Home() {
     </div>
 }
 
+
 export default Home
 
 // LAST TIME FINISHED WITH COMPONENT RENDERING MOVIES DEPENDING ON SEARCH BAR. NEXT ROUTNING. GOOD LUCK MATE! :)
