@@ -1,12 +1,13 @@
 import MovieCard from "../components/MovieCards"
 import {useState} from "react"
+import "../css/Home.css"
 
 function Home() {
     const[searchQuery, setSearchQuery] = useState("");
 
     const mymovies= [
-        {id: 1, title: "John Wick", release_date: "2020", },
-        {id: 2, title: "Terminator", release_date: "1997", url:'https://http2.mlstatic.com/D_NQ_NP_2X_694159-MLA85463933601_052025-F.webp'},
+        {id: 1, title: "Terminator", release_date: "1997", url:'https://http2.mlstatic.com/D_NQ_NP_2X_694159-MLA85463933601_052025-F.webp'},
+        {id: 2, title: "John Wick", release_date: "2020", },
         {id: 3, title: "The Matrix", release_date: "1999"},
     ]
 
@@ -30,13 +31,15 @@ function Home() {
 
     {/* Cards for movies */}
         <div className="movies-grid">
-            {mymovies.map((eachmovie) => (
-                eachmovie.title.toLowerCase().startsWith(searchQuery) && (<MovieCard movie={eachmovie} key={eachmovie.id}/>
+            {mymovies.map(
+                (eachmovie) => 
+                    (
+                // eachmovie.title.toLowerCase().startsWith(searchQuery) && (
+                
+                <MovieCard movie={eachmovie} key={eachmovie.id}/>
                 )
-            ))}
+            )}
         </div>
-        <br/>
-        <p>Search Query: {searchQuery}</p>
     </div>
 }
 
