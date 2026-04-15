@@ -1,15 +1,28 @@
-import MovieCard from "../components/MovieCards"
-import {useState} from "react"
-import "../css/Home.css"
+import MovieCard from "../components/MovieCards";
+import {useState, useEffect} from "react";
+import { searchMovies, getPopularMovies } from "../services/api";
+import "../css/Home.css";
 
 function Home() {
     const[searchQuery, setSearchQuery] = useState("");
 
-    const mymovies= [
-        {id: 1, title: "Terminator", release_date: "1997", url:'https://http2.mlstatic.com/D_NQ_NP_2X_694159-MLA85463933601_052025-F.webp'},
-        {id: 2, title: "John Wick", release_date: "2020", },
-        {id: 3, title: "The Matrix", release_date: "1999"},
-    ]
+    const [mymovies, setMovies] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect( () => {
+        const loadPopularMovies = async () => {
+            try {
+                const popularMovies = await getPopularMovies()
+                setMovies(popularMovies)
+            } catch (err) {
+                console.log(err)
+                setError("Failed to load movies")}
+            finally {setLoading(false)}
+        }
+
+        loadPopularMovies()
+    }, [])
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -29,7 +42,13 @@ function Home() {
             <button type="submit" className="search-button">Search</button>
         </form>
 
-    {/* Cards for movies */}
+        {error && <div className="error-message">{error}</div>}
+
+
+     {/* Cards for movies */}
+    {loading ? (
+        <div className="loading">Loading... </div>
+    ) : (
         <div className="movies-grid">
             {mymovies.map(
                 (eachmovie) => 
@@ -37,9 +56,9 @@ function Home() {
                 // eachmovie.title.toLowerCase().startsWith(searchQuery) && (
                 
                 <MovieCard movie={eachmovie} key={eachmovie.id}/>
-                )
-            )}
+                ))}
         </div>
+    )}
     </div>
 }
 
